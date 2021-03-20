@@ -5,6 +5,7 @@ import Search from './components/Search.js';
 import Footer from './components/Footer.js';
 import Home from './pages/Home.js';
 import Product from './pages/Product.js';
+import Cart from './pages/Cart.js';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <hr />
       <Route exact path='/' component={Home} />
       <Route path='/product/:id' component={Product} />
+      <Route path='/cart/:id?' component={Cart} />
       <Footer />
     </div>
   );

@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import Product from '../components/ProductCard.js';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Product from "../components/ProductCard.js";
+import { listProducts } from "../actions/productActions.js";
+import Loader from "../components/Loader.js";
+import Message from "../components/Message.js";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
-      setProducts(data);
-    }
-    fetchProducts();
-  }, [])
+    dispatch(listProducts());
+  }, [dispatch]);
 
   return (
     <div>
@@ -20,15 +22,19 @@ const Home = () => {
           Discount
         </span>
       </h2>
-      <div className='productBox'>
-        <div className='row row-cols-1 row-cols-md-3 g-4'>
-          {products.map((product) => {
-            return (
-              <Product key={product._id} product={product} />
-            );
-          })}
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message varient='danger'>{error}</Message>
+      ) : (
+        <div className='productBox'>
+          <div className='row row-cols-1 row-cols-md-3 g-4'>
+            {products.map((product) => {
+              return <Product key={product._id} product={product} />;
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

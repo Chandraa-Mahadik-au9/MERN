@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Cart from '../assets/cart-b.svg';
 
 const Header = () => {
   return (
@@ -37,11 +38,15 @@ const Header = () => {
               </li>
             </ul>
             <div className='d-flex'>
+              <Link to='/cart' className='align-self-center'>
+                <img className="cart" src={Cart} alt="cart" />
+                <strong className='bg-transparent m-1 border-0'>Cart</strong>
+              </Link>
               <Link to='/log-in'>
-                <button className='btn btn-outline-primary m-1'>Log In</button>
+                <button className='btn btn-outline-primary m-1 border-0'>Log In</button>
               </Link>
               <Link to='/sign-in'>
-                <button className='btn btn-primary m-1'>Log In</button>
+                <button className='btn btn-primary m-1'>Sign In</button>
               </Link>
             </div>
           </div>
