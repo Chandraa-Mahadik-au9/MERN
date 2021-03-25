@@ -11,7 +11,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (user && user.matchPassword(password)) {
+  if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -20,8 +20,41 @@ const authUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
+    return res.status(401).json({message: "Invalid email or password"});
+  }
+});
+
+// @desc Register new user
+// @route POST /api/users
+// @access Public
+
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists.");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
 });
 
@@ -30,35 +63,12 @@ const authUser = asyncHandler(async (req, res) => {
 // @access Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  // res.send("Okay.");
-  const user = await User.findById(req.user._id);
-  console.log(user);
-
-  // (res.json({
-  //   _id: user._id,
-  //   name: user.name,
-  //   email: user.email,
-  //   isAdmin: user.isAdmin,
-  // }))
-
-  // return (res.json({
-  //   _id: user._id,
-  //   name: user.name,
-  //   email: user.email,
-  //   isAdmin: user.isAdmin,
-  // }));
-
-  if (user) {
-    return res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found.");
-  }
+  console.log("user ID here : ", req.user._id);
+  User.findOne({ _id: req.user._id }, (err, result) => {
+    if (err) throw err;
+    // console.log("user Info as Result : ", result);
+    return res.json(result);
+  });
 });
 
-export { authUser, getUserProfile };
+export { authUser, registerUser, getUserProfile };

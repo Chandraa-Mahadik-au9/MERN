@@ -28,7 +28,7 @@ const Home = () => {
         <Message varient='danger'>{error}</Message>
       ) : (
         <div className='productBox'>
-          <div className='row row-cols-1 row-cols-md-3 g-4'>
+          <div className='row row-cols-1 row-cols-md-4 g-2 productSubBox'>
             {products.map((product) => {
               return <Product key={product._id} product={product} />;
             })}
