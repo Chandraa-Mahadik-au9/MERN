@@ -61,7 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  console.log("user ID here : ", req.user._id);
+  // console.log("user ID here : ", req.user._id);
   User.findOne({ _id: req.user._id }, (err, result) => {
     if (err) throw err;
     // console.log("user Info as Result : ", result);
@@ -69,4 +69,33 @@ const getUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
-export { authUser, registerUser, getUserProfile };
+// @desc Update user profile
+// @route PUT /api/users/profile
+// @access Private
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  // console.log("user ID here : ", req.user._id);
+  User.findOne({ _id: req.user._id }, (err, result) => {
+    if (err) throw err;
+    // console.log("user Info as Result : ", result);
+    const user = result;
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if(req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = user.save();
+
+    return res.json(updatedUser);
+    // return res.json({
+    //   _id: updatedUser._id,
+    //   name: updatedUser.name,
+    //   email: updatedUser.email,
+    //   isAdmin: updatedUser.isAdmin,
+    //   token: generateToken(updatedUser._id),
+    // })
+  });
+});
+
+export { authUser, registerUser, getUserProfile, updateUserProfile };

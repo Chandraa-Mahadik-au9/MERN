@@ -117,7 +117,7 @@ const Cart = ({ match, location, history }) => {
                 onClick={checkOutHandler}
                 disabled={cartItems.length === 0}
               >
-                Procee To Checkout
+                Proceed To Checkout
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Search from '../components/Search.js';
 import Product from "../components/ProductCard.js";
 import { listProducts } from "../actions/productActions.js";
 import Loader from "../components/Loader.js";
@@ -17,6 +18,8 @@ const Home = () => {
 
   return (
     <div>
+      <Search />
+      <hr />
       <h2>
         <span className='badge' style={{ backgroundColor: "#2469A0" }}>
           Discount
