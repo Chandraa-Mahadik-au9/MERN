@@ -58,7 +58,7 @@ const Header = () => {
               {userInfo ? (
                 <div className='dropdown ml-1'>
                   <button
-                    className='btn btn-primary dropdown-toggle'
+                    className='btn btn-primary dropdown-toggle profileButton'
                     id='dropdownMenuLink'
                     data-bs-toggle='dropdown'
                     aria-expanded='false'

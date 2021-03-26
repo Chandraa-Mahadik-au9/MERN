@@ -41,11 +41,11 @@ const orderSchema = mongoose.Schema(
         type: String,
         required: true,
       },
-      Pincode: {
+      pincode: {
         type: Number,
         required: true,
       },
-      state: {
+      stateName: {
         type: String,
         required: true,
       },
