@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
-      <h4>Copyright &copy; Deals Wagon</h4>
+    <div className="row">
+      <p className="col text-center py-2">Copyright &copy; Deals Wagon</p>
     </div>
   );
 };

@@ -1,8 +1,21 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Cart from '../assets/cart-b.svg';
+import Cart from "../assets/cart-b.svg";
+import { logout } from "../actions/userActions.js";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  // console.log(userInfo);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    console.log("Logout successful.");
+  };
+
   return (
     <div>
       <nav
@@ -39,15 +52,49 @@ const Header = () => {
             </ul>
             <div className='d-flex'>
               <Link to='/cart' className='align-self-center'>
-                <img className="cart" src={Cart} alt="cart" />
+                <img className='cart' src={Cart} alt='cart' />
                 <strong className='bg-transparent m-1 border-0'>Cart</strong>
               </Link>
-              <Link to='/log-in'>
-                <button className='btn btn-outline-primary m-1 border-0'>Log In</button>
-              </Link>
-              <Link to='/sign-in'>
-                <button className='btn btn-primary m-1'>Sign In</button>
-              </Link>
+              {userInfo ? (
+                <div className='dropdown ml-1'>
+                  <button
+                    className='btn btn-primary dropdown-toggle'
+                    id='dropdownMenuLink'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >
+                    {userInfo.name}
+                  </button>
+
+                  <ul
+                    className='dropdown-menu'
+                    aria-labelledby='dropdownMenuLink'
+                  >
+                    <li>
+                      <Link className='dropdown-item' to='/profile'>
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button className='dropdown-item' onClick={logoutHandler}>
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <div>
+                  <Link to='/login'>
+                    <button className='btn btn-outline-primary m-1 border-0'>
+                      Sign In
+                    </button>
+                  </Link>
+                </div>
+              )}
+
+              {/* <Link to='/register'>
+                <button className='btn btn-primary m-1'>Sign Up</button>
+              </Link> */}
             </div>
           </div>
         </div>

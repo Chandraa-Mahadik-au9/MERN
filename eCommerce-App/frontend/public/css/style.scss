@@ -1,13 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    max-width: 95vw;
+    margin: 0 auto;
+}
+
+.productSubBox {
+    margin: 0;
+}
+
 .productImg {
-    max-width: 200px;
-    height: auto;
-    margin:  0.5rem auto;
+    width: 200px;
 }
 
 .productCartImg {
-    max-width: 150px;
-    height: auto;
-    margin:  0.5rem auto;
+    width: 150px;
 }
 
 a {
